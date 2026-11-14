@@ -221,7 +221,7 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-4 text-slate-400">
             <a
-              href="https://github.com/Jeffreyryan2005/Lunar-Landing-Site-Navigator"
+              href="https://github.com/Jeffreyryan2005/SeleneSight"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-1 hover:text-cyan-400 transition-colors"

@@ -1,7 +1,7 @@
 # 🌔 SeleneSight — Lunar Landing Site Navigator
 **NASA International Space Apps Challenge 2026**  
 **Challenge:** [Lunar Landing Site Navigator](https://www.spaceappschallenge.org/2026/challenges/lunar-landing-site-navigator/)  
-**Live Repo:** [Jeffreyryan2005/Lunar-Landing-Site-Navigator](https://github.com/Jeffreyryan2005/Lunar-Landing-Site-Navigator)
+**Live Repo:** [Jeffreyryan2005/SeleneSight](https://github.com/Jeffreyryan2005/SeleneSight)
 
 ---
 
@@ -61,8 +61,8 @@ We built **SeleneSight** over the hackathon weekend to solve that exact headache
 ## Getting Started Locally
 
 ```bash
-git clone https://github.com/Jeffreyryan2005/Lunar-Landing-Site-Navigator.git
-cd Lunar-Landing-Site-Navigator
+git clone https://github.com/Jeffreyryan2005/SeleneSight.git
+cd SeleneSight
 npm install
 npm run dev
 ```
