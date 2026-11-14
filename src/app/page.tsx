@@ -23,9 +23,9 @@ import {
   Mountain,
   Zap,
   Radio,
-  Sparkles,
   ExternalLink,
   Code2,
+  FileText,
 } from "lucide-react";
 
 export default function Home() {
@@ -233,32 +233,43 @@ export default function Home() {
       />
 
       {/* Footer */}
-      <footer className="border-t border-slate-900 bg-slate-950 px-4 sm:px-6 py-4 text-xs font-mono text-slate-500">
+      <footer className="border-t border-slate-800 bg-slate-950 px-4 sm:px-6 py-4 text-xs font-mono text-slate-400">
         <div className="w-full max-w-[1850px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <div>
-            <span className="text-slate-400 font-bold">SELENESIGHT</span> • NASA International Space Apps Challenge 2026
-            <div className="text-[11px] text-slate-600">
-              Designed for Artemis III Human Landing System (HLS) & CLPS Robotic Missions
+            <div className="font-bold text-slate-200">
+              SELENESIGHT • NASA International Space Apps Challenge 2026
+            </div>
+            <div className="text-[11px] text-slate-400 mt-0.5">
+              Built by <span className="text-cyan-400 font-semibold">Team TwinTech</span> (Jeffrey Ryan R & Imaya Thillai S — SCAD CET, India) for Artemis III HLS & CLPS Flight Operations
             </div>
           </div>
-          <div className="flex items-center gap-4 text-slate-400">
+          <div className="flex items-center gap-4 text-slate-300">
             <a
               href="https://github.com/Jeffreyryan2005/SeleneSight"
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-1 hover:text-cyan-400 transition-colors"
+              className="flex items-center gap-1.5 hover:text-cyan-400 transition-colors"
             >
-              <Code2 className="w-3.5 h-3.5" />
-              <span>GitHub Repo</span>
+              <Code2 className="w-3.5 h-3.5 text-cyan-400" />
+              <span>GitHub Source</span>
+            </a>
+            <a
+              href="https://github.com/Jeffreyryan2005/SeleneSight/blob/main/SeleneSight_NASA_Space_Apps_Submission.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-1.5 hover:text-cyan-400 transition-colors"
+            >
+              <FileText className="w-3.5 h-3.5 text-amber-400" />
+              <span>7-Slide Deck (PDF)</span>
             </a>
             <a
               href="https://www.spaceappschallenge.org/2026/challenges/lunar-landing-site-navigator/"
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-1 hover:text-cyan-400 transition-colors"
+              className="flex items-center gap-1.5 hover:text-cyan-400 transition-colors"
             >
-              <ExternalLink className="w-3.5 h-3.5" />
-              <span>Challenge Brief</span>
+              <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+              <span>NASA Challenge</span>
             </a>
           </div>
         </div>

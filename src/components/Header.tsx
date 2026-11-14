@@ -8,7 +8,6 @@ import {
   FileText,
   Activity,
   Layers,
-  Sparkles,
   ExternalLink,
 } from "lucide-react";
 
@@ -118,7 +117,7 @@ export function Header({
           {/* Mission Readiness Brief */}
           <button
             onClick={onOpenReportModal}
-            className="px-3 py-1.5 rounded-md text-xs font-medium bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white flex items-center gap-1.5 shadow-md shadow-cyan-900/30 transition-all font-mono"
+            className="px-3 py-1.5 rounded-md text-xs font-medium bg-blue-600 hover:bg-blue-500 text-white border border-blue-500 flex items-center gap-1.5 shadow-sm transition-all font-mono"
           >
             <FileText className="w-3.5 h-3.5" />
             <span>Flight Readiness Brief</span>
