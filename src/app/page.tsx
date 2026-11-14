@@ -109,8 +109,8 @@ export default function Home() {
       />
 
       {/* Telemetry Status Ribbon */}
-      <div className="bg-slate-900/60 border-b border-slate-800/80 px-4 py-2 font-mono text-xs">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div className="bg-slate-900/60 border-b border-slate-800/80 px-4 sm:px-6 py-2 font-mono text-xs">
+        <div className="w-full max-w-[1850px] mx-auto flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-3">
             <span className="text-slate-400">ACTIVE TARGET:</span>
             <span className="text-cyan-400 font-bold">{selectedSite.name}</span>
@@ -153,8 +153,8 @@ export default function Home() {
 
       {/* Quick Operator Workflow Guide */}
       {showGuide && (
-        <div className="bg-gradient-to-r from-cyan-950/40 via-slate-900/40 to-blue-950/40 border-b border-cyan-900/30 px-4 py-2 font-mono text-xs">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
+        <div className="bg-gradient-to-r from-cyan-950/40 via-slate-900/40 to-blue-950/40 border-b border-cyan-900/30 px-4 sm:px-6 py-2 font-mono text-xs">
+          <div className="w-full max-w-[1850px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
               <strong className="text-cyan-300">Quick Workflow:</strong>
@@ -173,7 +173,7 @@ export default function Home() {
       )}
 
       {/* Main Grid Cockpit */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <main className="flex-1 w-full max-w-[1850px] mx-auto p-4 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Analytical Charts & Timeline (7 Cols) */}
         <div className="lg:col-span-7 flex flex-col gap-6">
           {/* 1. 360° Panoramic Horizon Chart */}
@@ -233,8 +233,8 @@ export default function Home() {
       />
 
       {/* Footer */}
-      <footer className="border-t border-slate-900 bg-slate-950 px-4 py-4 text-xs font-mono text-slate-500">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+      <footer className="border-t border-slate-900 bg-slate-950 px-4 sm:px-6 py-4 text-xs font-mono text-slate-500">
+        <div className="w-full max-w-[1850px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <div>
             <span className="text-slate-400 font-bold">SELENESIGHT</span> • NASA International Space Apps Challenge 2026
             <div className="text-[11px] text-slate-600">

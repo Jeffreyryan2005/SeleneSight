@@ -23,12 +23,12 @@ export function LunarPolarMap({
   const [showKaggleCraters, setShowKaggleCraters] = useState(true);
 
   // Map projection: Polar Stereographic
-  // Center (200, 200) is South Pole (lat = -90°)
-  // Radius = (90 + lat) * scale. At -84° (6° from pole), radius is 180px.
-  const mapCenter = 220;
-  const mapSize = 440;
+  // Center (280, 280) is South Pole (lat = -90°)
+  // Radius = (90 + lat) * scale. At -84° (6° from pole), radius is ~240px.
+  const mapCenter = 280;
+  const mapSize = 560;
   const maxColatitude = 10.0; // Show down to -80° latitude
-  const scale = (mapCenter - 25) / maxColatitude;
+  const scale = (mapCenter - 30) / maxColatitude;
 
   const latLonToXY = (lat: number, lon: number) => {
     const colat = Math.abs(lat) - 90.0; // negative or positive distance from pole
@@ -115,7 +115,7 @@ export function LunarPolarMap({
       </div>
 
       {/* SVG Stereographic Map */}
-      <div className="relative w-full aspect-square max-w-[480px] mx-auto bg-slate-950 rounded-xl border border-slate-800/90 overflow-hidden shadow-inner">
+      <div className="relative w-full aspect-square max-w-[620px] mx-auto bg-slate-950 rounded-xl border border-slate-800/90 overflow-hidden shadow-inner">
         <svg
           viewBox={`0 0 ${mapSize} ${mapSize}`}
           className="w-full h-full cursor-crosshair select-none"

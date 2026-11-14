@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <radialGradient id="favSpaceGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stopColor="#0284c7" stopOpacity="0.5" />
+      <stop offset="100%" stopColor="#020617" stopOpacity="1" />
+    </radialGradient>
+    <radialGradient id="favLunarSphere" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stopColor="#f8fafc" />
+      <stop offset="35%" stopColor="#cbd5e1" />
+      <stop offset="65%" stopColor="#64748b" />
+      <stop offset="100%" stopColor="#090d16" />
+    </radialGradient>
+    <linearGradient id="favOrbitGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0" />
+      <stop offset="50%" stopColor="#38bdf8" stopOpacity="1" />
+      <stop offset="100%" stopColor="#f59e0b" stopOpacity="1" />
+    </linearGradient>
+  </defs>
+
+  <rect width="120" height="120" rx="26" fill="#020617" />
+  <circle cx="60" cy="60" r="54" fill="url(#favSpaceGlow)" />
+  <circle cx="60" cy="60" r="48" fill="none" stroke="#0ea5e9" strokeWidth="1" strokeDasharray="3 4" opacity="0.6" />
+
+  <!-- Moon Body -->
+  <circle cx="60" cy="60" r="34" fill="url(#favLunarSphere)" stroke="#475569" strokeWidth="0.8" />
+  <!-- Maria and Craters -->
+  <path d="M 46 42 Q 54 38 60 44 Q 56 54 48 50 Z" fill="#334155" opacity="0.4" />
+  <circle cx="60" cy="84" r="4" fill="#0f172a" stroke="#94a3b8" strokeWidth="0.8" />
+  <circle cx="50" cy="64" r="3" fill="#1e293b" stroke="#cbd5e1" strokeWidth="0.6" />
+
+  <!-- Orbit line -->
+  <path d="M 20 74 C 22 36, 64 22, 92 38 C 106 50, 102 76, 82 88 C 72 94, 64 88, 60 84"
+        fill="none"
+        stroke="url(#favOrbitGrad)"
+        strokeWidth="3.2"
+        strokeLinecap="round" />
+
+  <!-- South pole crosshair & beacon -->
+  <circle cx="60" cy="84" r="6" fill="none" stroke="#38bdf8" strokeWidth="1" strokeDasharray="2 2" />
+  <circle cx="60" cy="84" r="2.5" fill="#f59e0b" />
+</svg>

@@ -21,8 +21,8 @@ export function HorizonSkyChart({
 
   // SVG dimensions for panoramic ribbon
   const svgWidth = 800;
-  const svgHeight = 280;
-  const padding = { top: 30, right: 20, bottom: 40, left: 45 };
+  const svgHeight = 330;
+  const padding = { top: 35, right: 25, bottom: 45, left: 50 };
   const graphWidth = svgWidth - padding.left - padding.right;
   const graphHeight = svgHeight - padding.top - padding.bottom;
 
