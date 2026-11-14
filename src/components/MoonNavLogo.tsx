@@ -51,20 +51,8 @@ export function MoonNavLogo({ className = "w-10 h-10", size = 44 }: MoonNavLogoP
           </filter>
         </defs>
 
-        {/* Space Glow Background */}
-        <circle cx="60" cy="60" r="58" fill="url(#headerSpaceGlow)" />
-
-        {/* Outer Celestial Compass Ring */}
-        <circle cx="60" cy="60" r="54" fill="none" stroke="#0ea5e9" strokeWidth="0.8" strokeDasharray="3 4" opacity="0.5" />
-
-        {/* Cardinal Ticks */}
-        <line x1="60" y1="2" x2="60" y2="7" stroke="#38bdf8" strokeWidth="1.5" opacity="0.8" />
-        <line x1="60" y1="113" x2="60" y2="118" stroke="#38bdf8" strokeWidth="1.5" opacity="0.8" />
-        <line x1="2" y1="60" x2="7" y2="60" stroke="#38bdf8" strokeWidth="1.5" opacity="0.8" />
-        <line x1="113" y1="60" x2="118" y2="60" stroke="#38bdf8" strokeWidth="1.5" opacity="0.8" />
-
         {/* The Moon Sphere */}
-        <circle cx="60" cy="60" r="38" fill="url(#headerLunarSphere)" stroke="#475569" strokeWidth="0.5" />
+        <circle cx="60" cy="60" r="40" fill="url(#headerLunarSphere)" stroke="#64748b" strokeWidth="1" />
 
         {/* Lunar Maria (Dark Basaltic Plains) */}
         <path d="M 42 36 Q 50 32 58 37 Q 64 42 60 50 Q 52 54 44 48 Z" fill="#334155" opacity="0.38" />
