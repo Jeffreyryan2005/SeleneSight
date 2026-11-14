@@ -153,7 +153,7 @@ export default function Home() {
 
       {/* Quick Operator Workflow Guide */}
       {showGuide && (
-        <div className="bg-gradient-to-r from-cyan-950/40 via-slate-900/40 to-blue-950/40 border-b border-cyan-900/30 px-4 sm:px-6 py-2 font-mono text-xs">
+        <div className="bg-slate-900/90 border-b border-slate-800 px-4 sm:px-6 py-2 font-mono text-xs">
           <div className="w-full max-w-[1850px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
