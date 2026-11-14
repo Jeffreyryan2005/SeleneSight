@@ -34,6 +34,7 @@ export default function Home() {
   const [timelineIndex, setTimelineIndex] = useState<number>(0);
   const [isApiInspectorOpen, setIsApiInspectorOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [showGuide, setShowGuide] = useState(true);
 
   // Compute 360° local horizon obstruction profile
   const horizonAnalysis = useMemo(() => {
@@ -149,6 +150,27 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Quick Operator Workflow Guide */}
+      {showGuide && (
+        <div className="bg-gradient-to-r from-cyan-950/40 via-slate-900/40 to-blue-950/40 border-b border-cyan-900/30 px-4 py-2 font-mono text-xs">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+              <strong className="text-cyan-300">Quick Workflow:</strong>
+              <span className="text-slate-300">
+                1. Select a candidate site on the GIS map • 2. Check the 360° horizon chart to verify mountain ridges don't block the Sun or Earth • 3. Scrub the 14-day timeline to find green Golden Windows • 4. Export the Flight Readiness Brief.
+              </span>
+            </div>
+            <button
+              onClick={() => setShowGuide(false)}
+              className="text-slate-400 hover:text-white text-[11px] underline shrink-0"
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Main Grid Cockpit */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">

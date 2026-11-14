@@ -103,7 +103,7 @@ export function TimelineGantt({
         <div className="flex items-center justify-between text-xs text-slate-300">
           <span className="text-cyan-400 font-bold">{dateFormatted}</span>
           <span className="text-slate-400">
-            Step {currentIndex + 1} / {series.data.length} ({series.stepHours}h increments)
+            Day {Math.floor((currentIndex * series.stepHours) / 24) + 1} of 14 • Step {currentIndex + 1} / {series.data.length}
           </span>
         </div>
 
@@ -117,13 +117,23 @@ export function TimelineGantt({
           className="w-full accent-cyan-400 bg-slate-800 rounded-lg cursor-pointer h-2"
         />
 
+        {/* Day Ticks */}
+        <div className="flex justify-between text-[10px] text-slate-500 font-mono px-0.5">
+          <span>Day 1</span>
+          <span>Day 3</span>
+          <span>Day 6</span>
+          <span>Day 9</span>
+          <span>Day 12</span>
+          <span>Day 14</span>
+        </div>
+
         {/* Multi-Track Gantt Bars */}
-        <div className="grid grid-cols-1 gap-1.5 mt-2 bg-slate-950/80 p-2.5 rounded-lg border border-slate-800/80">
+        <div className="grid grid-cols-1 gap-1.5 mt-1 bg-slate-950/80 p-2.5 rounded-lg border border-slate-800/80">
           {/* Track 1: Solar Illumination */}
           <div className="flex items-center gap-2 text-[11px]">
-            <div className="w-24 text-slate-400 flex items-center gap-1 shrink-0">
-              <Zap className="w-3 h-3 text-amber-400" />
-              <span>Solar Power</span>
+            <div className="w-28 text-slate-300 flex items-center gap-1.5 shrink-0">
+              <Zap className="w-3.5 h-3.5 text-amber-400" />
+              <span>Solar Daylight</span>
             </div>
             <div className="flex-1 flex h-4 rounded overflow-hidden bg-slate-900 border border-slate-800">
               {series.data.map((step, idx) => (
@@ -132,7 +142,7 @@ export function TimelineGantt({
                   onClick={() => onIndexChange(idx)}
                   className={`flex-1 cursor-pointer transition-opacity ${
                     step.isSunAboveHorizon
-                      ? "bg-amber-500/80 hover:bg-amber-400"
+                      ? "bg-amber-500 hover:bg-amber-400"
                       : "bg-slate-900"
                   } ${idx === currentIndex ? "ring-2 ring-white z-10" : ""}`}
                   title={`${new Date(step.timeIso).toLocaleDateString()} - Sun: ${
@@ -148,9 +158,9 @@ export function TimelineGantt({
 
           {/* Track 2: Direct-to-Earth Line of Sight */}
           <div className="flex items-center gap-2 text-[11px]">
-            <div className="w-24 text-slate-400 flex items-center gap-1 shrink-0">
-              <Radio className="w-3 h-3 text-cyan-400" />
-              <span>DTE Comms</span>
+            <div className="w-28 text-slate-300 flex items-center gap-1.5 shrink-0">
+              <Radio className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Earth Radio Link</span>
             </div>
             <div className="flex-1 flex h-4 rounded overflow-hidden bg-slate-900 border border-slate-800">
               {series.data.map((step, idx) => (
@@ -159,7 +169,7 @@ export function TimelineGantt({
                   onClick={() => onIndexChange(idx)}
                   className={`flex-1 cursor-pointer transition-opacity ${
                     step.isEarthAboveHorizon
-                      ? "bg-cyan-500/80 hover:bg-cyan-400"
+                      ? "bg-cyan-500 hover:bg-cyan-400"
                       : "bg-slate-900"
                   } ${idx === currentIndex ? "ring-2 ring-white z-10" : ""}`}
                   title={`${new Date(step.timeIso).toLocaleDateString()} - Earth: ${
@@ -175,8 +185,8 @@ export function TimelineGantt({
 
           {/* Track 3: The Golden Window (Power + Comms Overlap) */}
           <div className="flex items-center gap-2 text-[11px]">
-            <div className="w-24 text-emerald-400 flex items-center gap-1 shrink-0 font-bold">
-              <Sparkles className="w-3 h-3 text-emerald-400" />
+            <div className="w-28 text-emerald-400 flex items-center gap-1.5 shrink-0 font-bold">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
               <span>Golden Window</span>
             </div>
             <div className="flex-1 flex h-4 rounded overflow-hidden bg-slate-900 border border-slate-800">
@@ -186,7 +196,7 @@ export function TimelineGantt({
                   onClick={() => onIndexChange(idx)}
                   className={`flex-1 cursor-pointer transition-opacity ${
                     step.isGoldenWindow
-                      ? "bg-emerald-500 hover:bg-emerald-400"
+                      ? "bg-emerald-500 hover:bg-emerald-400 shadow-sm shadow-emerald-500/50"
                       : "bg-slate-900"
                   } ${idx === currentIndex ? "ring-2 ring-white z-10" : ""}`}
                   title={`${new Date(step.timeIso).toLocaleDateString()} - Golden Window: ${
@@ -199,6 +209,10 @@ export function TimelineGantt({
               {series.goldenWindowHours}h
             </span>
           </div>
+        </div>
+
+        <div className="text-[10px] text-slate-400 italic px-1 pt-0.5">
+          * Golden Window: Concurrent operational hours where sunlight recharges surface batteries while Earth ground stations receive direct telemetry.
         </div>
       </div>
 

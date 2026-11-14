@@ -98,6 +98,27 @@ export function HorizonSkyChart({
         </div>
       </div>
 
+      {/* Quick Visual Legend Banner */}
+      <div className="bg-slate-950/70 border border-slate-800/80 rounded-lg px-3 py-1.5 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-slate-300">
+        <div className="flex items-center gap-3">
+          <span className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-sm shadow-amber-400/50" />
+            <strong className="text-amber-300">Sun</strong> (Above line = Sunlight)
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-sm shadow-cyan-400/50" />
+            <strong className="text-cyan-300">Earth</strong> (Above line = DTE Radio Link)
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-3 h-1.5 rounded-sm bg-slate-400" />
+            <span className="text-slate-400">Grey Ridge = Mountain Silhouette</span>
+          </span>
+        </div>
+        <div className="text-[10px] text-slate-400">
+          Scrub the timeline below to watch the celestial paths cross the sky
+        </div>
+      </div>
+
       {/* Main Visualizer Canvas */}
       {viewMode === "panoramic" ? (
         <div className="relative w-full overflow-hidden bg-slate-950 rounded-lg border border-slate-800/80 p-1">

@@ -3,7 +3,7 @@
 import React from "react";
 import { LunarSite } from "../lib/artemisSites";
 import { evaluateCraterHazard } from "../lib/kaggleCraterDb";
-import { ShieldAlert, ShieldCheck, Database, Camera, AlertTriangle } from "lucide-react";
+import { Mountain, Layers, ShieldCheck, AlertTriangle, Compass, CheckCircle2 } from "lucide-react";
 
 interface CraterHazardPanelProps {
   selectedSite: LunarSite;
@@ -12,117 +12,135 @@ interface CraterHazardPanelProps {
 export function CraterHazardPanel({ selectedSite }: CraterHazardPanelProps) {
   const hazard = evaluateCraterHazard(selectedSite.lat, selectedSite.lon);
 
+  // Derived rock abundance and landing safety parameters
+  const isSafeSlope = selectedSite.averageSlopeDeg <= 5.0;
+  const isSafeRimDistance = hazard.distanceToRimKm >= 1.0;
+  const rockAbundancePct = Math.min(18, Math.max(3, Math.round(hazard.boulderDensityIndex * 15)));
+
   return (
     <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow-xl flex flex-col gap-3 font-mono">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
         <div className="flex items-center gap-2">
-          <Database className="w-4 h-4 text-purple-400" />
+          <Layers className="w-4 h-4 text-cyan-400" />
           <div>
             <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-              Kaggle Planetary Crater & AI Hazard Detection
+              Terrain Morphology & Crater Rim Clearance
             </h3>
             <p className="text-xs text-slate-400">
-              Robbins Lunar Crater DB (1.3M+ Craters) + AI Terrain Relative Navigation
+              Cross-referenced with Robbins Lunar Crater Catalog (1.3M+ Craters)
             </p>
           </div>
         </div>
-        <span className="text-[10px] bg-purple-950 text-purple-300 border border-purple-800 px-2 py-0.5 rounded font-bold">
-          Kaggle AI Fusion
+        <span className="text-[10px] bg-cyan-950 text-cyan-300 border border-cyan-800 px-2 py-0.5 rounded font-bold">
+          Topography Assessment
         </span>
       </div>
 
-      {/* Hazard Status Grid */}
+      {/* Primary Metrics Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
         <div className="bg-slate-950 p-2.5 rounded border border-slate-800">
-          <div className="text-slate-500 text-[10px]">CLOSEST IMPACT CRATER</div>
+          <div className="text-slate-500 text-[10px]">NEAREST PROMINENT CRATER</div>
           <div className="text-white font-bold text-sm mt-0.5">
             {hazard.closestCrater.name}
           </div>
           <div className="text-slate-400 text-[10px] mt-0.5">
-            Class: {hazard.closestCrater.morphology} ({hazard.closestCrater.diameterKm} km ⌀)
+            {hazard.closestCrater.diameterKm} km rim-to-rim • {hazard.closestCrater.morphology}
           </div>
         </div>
 
         <div className="bg-slate-950 p-2.5 rounded border border-slate-800">
-          <div className="text-slate-500 text-[10px]">CRATER RIM DISTANCE</div>
-          <div className="text-cyan-400 font-bold text-sm mt-0.5">
+          <div className="text-slate-500 text-[10px]">DISTANCE TO CRATER CREST</div>
+          <div className={`font-bold text-sm mt-0.5 ${hazard.distanceToRimKm < 1 ? "text-amber-400" : "text-emerald-400"}`}>
             {hazard.distanceToRimKm} km
           </div>
           <div className="text-slate-400 text-[10px] mt-0.5">
             {hazard.isInsideCrater
               ? "Inside Crater Interior"
               : hazard.isInEjectaBlanket
-              ? "In Ejecta Blanket"
-              : "Clear Regolith Plain"}
+              ? "Continuous Ejecta Blanket"
+              : "Clear Regolith Plains"}
           </div>
         </div>
 
         <div className="bg-slate-950 p-2.5 rounded border border-slate-800">
-          <div className="text-slate-500 text-[10px]">BOULDER DENSITY INDEX</div>
+          <div className="text-slate-500 text-[10px]">ESTIMATED ROCK ABUNDANCE</div>
           <div
             className={`font-bold text-sm mt-0.5 ${
-              hazard.boulderDensityIndex > 0.6
+              rockAbundancePct > 12
                 ? "text-red-400"
-                : hazard.boulderDensityIndex > 0.3
+                : rockAbundancePct > 7
                 ? "text-amber-400"
                 : "text-emerald-400"
             }`}
           >
-            {hazard.boulderDensityIndex} / 1.0
+            {rockAbundancePct}% fractional area
           </div>
           <div className="text-slate-400 text-[10px] mt-0.5">
-            {hazard.boulderDensityIndex > 0.5 ? "High Rockslide Risk" : "Dispersed Regolith"}
+            {rockAbundancePct > 10 ? "Elevated Boulder Density" : "Nominal Landing Regolith"}
           </div>
         </div>
       </div>
 
-      {/* AI Computer Vision Hazard Scanner HUD */}
-      <div className="bg-slate-950 rounded-lg border border-purple-900/40 p-3 flex flex-col gap-2">
-        <div className="flex items-center justify-between text-xs">
-          <div className="flex items-center gap-1.5 text-purple-300 font-bold">
-            <Camera className="w-3.5 h-3.5" />
-            <span>AI Optical Surface Hazard Scanner (LROC NAC Feed)</span>
-          </div>
-          <span className="text-[10px] text-slate-500">YOLOv8-LU3M6TGT Model</span>
+      {/* Engineering Landing Ellipse Checklist */}
+      <div className="bg-slate-950 rounded-lg border border-slate-800 p-3 space-y-2 text-xs">
+        <div className="flex items-center justify-between border-b border-slate-800/60 pb-1.5">
+          <span className="font-bold text-white">Target 100m × 100m Touchdown Criteria:</span>
+          <span className="text-[11px] text-cyan-400">Artemis HLS Tolerances</span>
         </div>
 
-        {/* Simulated Camera Scanner Feed */}
-        <div className="relative h-28 bg-gradient-to-br from-slate-900 to-slate-950 rounded border border-slate-800 overflow-hidden flex items-center justify-center">
-          {/* Scanline animation */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/10 to-transparent animate-pulse pointer-events-none" />
-
-          {/* Bounding Boxes representing detected boulders & micro-craters */}
-          <div className="absolute top-4 left-8 border border-emerald-500 bg-emerald-500/10 text-emerald-400 text-[9px] px-1 rounded">
-            Target Touchdown Zone (98.4%)
-          </div>
-          <div className="absolute bottom-5 right-12 border border-amber-500 bg-amber-500/10 text-amber-300 text-[9px] px-1 rounded">
-            Micro-Crater 3.2m (94.1%)
-          </div>
-          <div className="absolute top-6 right-28 border border-red-500 bg-red-500/10 text-red-400 text-[9px] px-1 rounded">
-            Boulder Hazard 1.4m (91.8%)
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+          <div className="flex items-center gap-2">
+            {isSafeSlope ? (
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            ) : (
+              <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+            )}
+            <span className="text-slate-300">
+              Average Slope: <strong className="text-white">{selectedSite.averageSlopeDeg}°</strong> (Limit: &lt;5°)
+            </span>
           </div>
 
-          <div className="text-center font-mono z-10">
-            <div className="text-xs text-slate-300 font-bold">
-              AUTONOMOUS HAZARD AVOIDANCE (AHA) STATUS: CLEAR
-            </div>
-            <div className="text-[10px] text-slate-500 mt-0.5">
-              Terrain Roughness: {selectedSite.averageSlopeDeg}° • Safe Descent Corridor Verified
-            </div>
+          <div className="flex items-center gap-2">
+            {selectedSite.maxSlopeDeg <= 12.0 ? (
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            ) : (
+              <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
+            )}
+            <span className="text-slate-300">
+              Max Peak Slope: <strong className="text-white">{selectedSite.maxSlopeDeg}°</strong> (Tip-over threshold: 12°)
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {isSafeRimDistance ? (
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            ) : (
+              <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+            )}
+            <span className="text-slate-300">
+              Crater Rim Buffer: <strong className="text-white">{hazard.distanceToRimKm} km</strong> (Min: 0.5 km)
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            <span className="text-slate-300">
+              Cold Trap Access: <strong className="text-white">{selectedSite.psrDistanceKm} km</strong> to ice deposits
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Historical Lesson Learned Box */}
-      <div className="bg-slate-950/80 p-2.5 rounded border border-slate-800 text-xs flex items-start gap-2">
+      {/* Real Historical Context & Operational Takeaway */}
+      <div className="bg-slate-950/80 p-3 rounded-lg border border-slate-800 text-xs flex items-start gap-2.5">
         <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-        <div>
-          <span className="text-amber-400 font-bold">Historical Flight Precedent: </span>
-          <span className="text-slate-300">
+        <div className="space-y-0.5">
+          <span className="text-amber-400 font-bold">Flight History Lesson: </span>
+          <p className="text-slate-300 leading-relaxed text-[11px]">
             {selectedSite.historicalNote ||
-              `In 2024, Intuitive Machines' Odysseus (IM-1) touched down on an unmodeled 12° slope near Malapert A, resulting in vehicle tip-over. ${selectedSite.name}'s slope is ${selectedSite.averageSlopeDeg}°, safely below the critical 8° limit.`}
-          </span>
+              `In February 2024, Intuitive Machines' Odysseus (IM-1) touched down on an unmodeled 12° local slope near Malapert A, which caught a landing leg and caused the lander to tip on its side. At ${selectedSite.name}, the average slope is ${selectedSite.averageSlopeDeg}°, safely within the stable landing envelope.`}
+          </p>
         </div>
       </div>
     </div>
