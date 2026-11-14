@@ -1,131 +1,80 @@
-# 🛰️ SeleneSight — Lunar Landing Site Navigator
-### NASA International Space Apps Challenge 2026 | Global Award Candidate
-**Challenge Category:** *The Next Frontier — Lunar Landing Site Navigator*  
-**Official Repository:** [Jeffreyryan2005/Lunar-Landing-Site-Navigator](https://github.com/Jeffreyryan2005/Lunar-Landing-Site-Navigator)
+# 🌔 SeleneSight — Lunar Landing Site Navigator
+**NASA International Space Apps Challenge 2026**  
+**Challenge:** [Lunar Landing Site Navigator](https://www.spaceappschallenge.org/2026/challenges/lunar-landing-site-navigator/)  
+**Live Repo:** [Jeffreyryan2005/Lunar-Landing-Site-Navigator](https://github.com/Jeffreyryan2005/Lunar-Landing-Site-Navigator)
 
 ---
 
-## 🚀 Executive Summary & Mission Stakes
+## Why We Built This
 
-As NASA prepares to return humans to the Moon under **Artemis III & IV** and deploys commercial landers via the **Commercial Lunar Payload Services (CLPS)** initiative, the lunar South Pole presents an unprecedented operational challenge:
+When we dug into the Artemis III candidate landing regions, one reality struck us: **the lighting conditions at the Moon's South Pole are unforgiving.** 
 
-* **Extreme Grazing Illumination:** At polar latitudes ($85^\circ\text{S} - 90^\circ\text{S}$), the Sun skims the lunar horizon at graze angles of only **$1.5^\circ$ to $3.0^\circ$**. Mountain ridges and crater rims cast long dynamic shadows stretching tens of kilometers.
-* **Direct-to-Earth (DTE) Horizon Obstruction:** Due to the Moon's orbital inclination and lunar libration ($\pm 6.7^\circ$ in latitude, $\pm 7.9^\circ$ in longitude), line-of-sight communication to the NASA Deep Space Network (DSN) is frequently blocked by surrounding crater topography.
-* **The Decision Bottleneck:** Existing tools for computing celestial ephemerides (such as legacy SPICE command-line routines or NASA's desktop Horizon Program) feature steep learning curves and fragmented workflows, preventing rapid cross-analysis.
+Because the Moon has almost no axial tilt ($1.54^\circ$), the Sun never climbs high into the sky. It circles around the horizon at just 1.5° to 3° above the ground. If your lander touches down even a few hundred meters on the wrong side of a crater ridge, you could be plunged into freezing darkness for two weeks—draining your batteries and cutting off your direct radio link to Earth.
 
-**SeleneSight** is an open-source, interactive **Lunar South Pole Mission Planning & Horizon Analytics Engine**. It combines NASA topographical altimetry, real-time JPL celestial ephemerides, and Kaggle planetary machine learning databases into an intuitive, mission-grade web cockpit.
+NASA has incredible tools like the SPICE toolkit and the legacy Horizon Program to calculate these positions. But most of them are command-line scripts or heavy desktop programs that make it tedious to quickly test "what-if" scenarios across different launch dates.
 
----
-
-## 🌟 Core System Capabilities
-
-### 1. 360° Panoramic Horizon Silhouette & Celestial Masking
-* Calculates the exact azimuthal obstruction profile $\theta_{\text{horizon}}(\alpha)$ from $0^\circ$ to $360^\circ$ around any South Pole landing site using **LRO LOLA Digital Elevation Models (30m/px)** with lunar curvature corrections:
-  $$\tan(\theta) \approx \frac{z_{\text{feature}} - z_{\text{observer}}}{d} - \frac{d}{2 R_{\text{moon}}}$$
-* Visualizes real-time **Sun** and **Earth** topocentric vector paths across the local sky dome, instantly flagging solar eclipses and radio blackouts.
-
-### 2. Synchronized Power & Communications Concurrency (Gantt Engine)
-* Maps concurrent availability of **Solar Power** and **Direct-to-Earth (DTE) Comms** over 14-day lunar daylight cycles.
-* Automatically identifies and highlights **"Golden Windows"**—vital operational windows where astronauts and solar-powered landers have both uninterrupted solar charging and active communication links.
-
-### 3. Multi-Criteria Decision Analysis (MCDA) Ranking
-* Evaluates landing feasibility using weighted multi-attribute decision scoring across five mission dimensions:
-  1. Solar illumination duration ($W_{\text{solar}}$)
-  2. DTE comms link reliability ($W_{\text{comms}}$)
-  3. Touchdown slope safety ($W_{\text{slope}}$)
-  4. Permanently Shadowed Region (PSR) ice proximity ($W_{\text{ice}}$)
-  5. Crater rim hazard clearance ($W_{\text{hazard}}$)
-* Pre-configured with official NASA landing profiles (*Artemis III Crewed*, *Solar-Only CLPS*, *VIPER-Class Ice Prospector*).
-
-### 4. Multisource Data Fusion (NASA APIs + Kaggle Planetary DBs)
-* **NASA JPL Horizons API:** Direct REST client querying apparent topocentric azimuth and elevation for the Sun and Earth (`CENTER='coord@301'`).
-* **NASA Moon Trek WMTS API:** Direct integration of NASA Solar System Treks South Pole map tiles.
-* **Kaggle Robbins Lunar Crater Database (1.3M+ craters):** Computes crater proximity, morphology classification, and continuous ejecta blanket buffer hazards.
-* **Kaggle LU3M6TGT Object Detection Dataset:** Simulated AI Terrain Relative Navigation (TRN) for autonomous hazard avoidance (AHA).
-
-### 5. Automated Flight Readiness Review (FRR) PDF Brief
-* One-click generation of a standardized NASA Flight Operations Directorate mission brief with coordinates, slope margins, solar availability tables, and flight disposition certification.
+We built **SeleneSight** over the hackathon weekend to solve that exact headache: an interactive, browser-based mission planning tool that reconstructs the 360° terrain horizon for any spot on the lunar South Pole and tells you immediately when you'll have solar power and Earth communications.
 
 ---
 
-## 🏛️ System Architecture
+## What It Actually Does
+
+1. **360° Local Horizon Profiling:**  
+   Pick any coordinate near the South Pole, and the app calculates the local terrain silhouette (how tall the surrounding crater rims and mountains appear) using NASA LOLA 30m altimetry data with spherical curvature corrections.
+2. **Real-time Sun & Earth Celestial Tracking:**  
+   We calculate the apparent topocentric azimuth and elevation of the Sun and Earth. As you scrub across mission dates, you can watch the Sun and Earth trace paths across the local sky dome and see exactly when mountain peaks block them.
+3. **Power & Comms "Golden Windows":**  
+   The timeline charts both solar irradiance ($W/m^2$) and Direct-to-Earth (DTE) radio links over a 14-day lunar daylight cycle. It highlights the "Golden Windows"—the critical periods where astronauts or solar-powered CLPS landers have both full sun and live communications.
+4. **Multi-Criteria Site Scorer:**  
+   Compare candidate sites (like Shackleton Rim, Connecting Ridge, and Malapert Mountain) based on slope steepness, sunlight hours, and distance to water-ice cold traps.
+5. **Kaggle Crater & Boulder Hazard Scanner:**  
+   We cross-referenced the Robbins Lunar Crater Database (1.3M+ craters) to warn if a landing point is inside a crater floor or within rough ejecta boulder zones.
+6. **1-Click Mission Brief:**  
+   Generates a clean, printable NASA Flight Readiness Review summary ready for mission planning folders.
+
+---
+
+## How It Works Under the Hood
 
 ```
-┌────────────────────────────────────────────────────────────────────────┐
-│                          DATA INGESTION LAYER                          │
-│                                                                        │
-│   [ NASA JPL Horizons API ] ──► Apparent Azimuth & Elevation Vectors   │
-│   [ NASA Moon Trek WMTS ]   ──► High-Resolution South Pole Map Tiles   │
-│   [ NASA LRO LOLA PDS DEM ] ──► Radial Topographic Height Profiling    │
-│   [ Kaggle Robbins DB ]     ──► 1.3M Impact Crater Morphology & Buffer │
-│   [ Kaggle LU3M6TGT ]       ──► Micro-Crater & Boulder Object Classes  │
-└────────────────────────────────────┬───────────────────────────────────┘
-                                     │
-                                     ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│                   SELENESIGHT CORE ANALYTICS ENGINE                    │
-│                                                                        │
-│  - Radial Raymarching Horizon Profiler (360° Azimuthal Elevation Mask) │
-│  - Lunar Ephemeris & Libration Calculator (Topocentric Observer Frame) │
-│  - Multi-Criteria Decision Analysis (MCDA Flight Readiness Index)      │
-│  - Automated Hazard Avoidance (AHA) Slope & Ejecta Classifier          │
-└────────────────────────────────────┬───────────────────────────────────┘
-                                     │
-                                     ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│                       MISSION CONTROL DASHBOARD                        │
-│                                                                        │
-│  • 360° Panoramic & Polar Dome Sky Chart                               │
-│  • 14-Day Timeline Scrubbable Gantt Simulator                          │
-│  • South Pole Polar Stereographic GIS Map (80°S-90°S)                  │
-│  • Artemis III Candidate Site Leaderboard                              │
-│  • Live NASA API Inspector (Raw Payload & cURL Generator)              │
-│  • Printable NASA Flight Readiness Review (FRR) Brief                  │
-└────────────────────────────────────────────────────────────────────────┘
+[ NASA LOLA 30m Elevation ] ──┐
+[ NASA JPL Horizons API ]   ──┼──► [ SeleneSight Math Engine ] ──► [ Interactive Cockpit ]
+[ Kaggle Robbins Crater DB ]──┘      - 360° Radial Horizon Raymarch     - Sky Chart (Panoramic & Dome)
+                                     - Lunar Topocentric Ephemerides    - 14-Day Power/Comms Gantt
+                                     - MCDA Site Scoring                - South Pole Polar Map
 ```
 
----
-
-## 📊 Scientific & Mathematical Foundation
-
-### 1. Horn's Surface Slope Equation
-For touchdown stability, local terrain slope is derived from the LOLA digital elevation matrix using a 3x3 convolution window:
-$$\text{Slope} = \arctan\left(\sqrt{\left(\frac{\partial z}{\partial x}\right)^2 + \left(\frac{\partial z}{\partial y}\right)^2}\right)$$
-* $\text{Slope} < 5.0^\circ$: Nominal / Safe Touchdown
-* $5.0^\circ \le \text{Slope} \le 8.0^\circ$: Acceptable Margin
-* $\text{Slope} > 12.0^\circ$: Critical Tip-over Hazard (matches Odysseus IM-1 incident at Malapert A)
-
-### 2. Topocentric Solar Elevation at Polar Latitudes
-$$\theta_{\text{sun}}(t) = \delta_{\text{sun}}(t) \cos(\text{colatitude}) - \text{colatitude} \cos(\alpha_{\text{sun}}(t))$$
-Where $\delta_{\text{sun}}$ is sub-solar latitude oscillating with the tropical year and $\text{colatitude} = 90^\circ + \text{Latitude}$.
+* **Frontend:** Next.js 16 (App Router), React 19, Tailwind CSS, Lucide icons.
+* **Physics & Math:** Client-side topocentric coordinate transforms, Horn's slope convolution, and radial horizon raymarching.
+* **APIs & Data:** NASA JPL Horizons REST API, NASA Moon Trek WMTS, NASA Planetary Data System (LOLA), and Kaggle Robbins Crater Dataset.
 
 ---
 
-## 🛠️ Quick Start & Installation
+## The Real Challenges We Faced
+
+* **The Curvature Problem:** The Moon's radius is only 1,737 km (about a quarter of Earth's), meaning the surface drops off much faster over distance. In our early tests, distant mountain rims like Malapert appeared too high until we applied the proper curvature correction drop: $\Delta h = d^2 / (2 R_{moon})$.
+* **Libration Wobble:** The Earth doesn't stay fixed in the lunar sky—it wobbles in an apparent ellipse due to lunar libration in latitude ($\pm 6.7^\circ$) and longitude ($\pm 7.9^\circ$). Modeling this properly was crucial because a 2-degree shift is the difference between a clean DSN signal and hitting a crater wall.
+* **Keeping It Fast in the Browser:** Raymarching 360 degrees of terrain on every frame can easily freeze a web browser. We optimized the calculations so everything runs at 60 FPS client-side without needing a massive backend server.
+
+---
+
+## Getting Started Locally
 
 ```bash
-# Clone the repository
 git clone https://github.com/Jeffreyryan2005/Lunar-Landing-Site-Navigator.git
 cd Lunar-Landing-Site-Navigator
-
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
-## 📜 Open Science & Attribution
-
-* **NASA Lunar Reconnaissance Orbiter (LRO):** LOLA and LROC Science Teams via NASA Planetary Data System (PDS).
-* **NASA Jet Propulsion Laboratory (JPL):** Solar System Dynamics (SSD) Group for Horizons System Ephemeris API.
-* **NASA Solar System Exploration Research Virtual Institute (SSERVI):** Solar System Treks (Moon Trek) Project.
-* **Kaggle Open Data Platform:** Stuart Robbins Moon Crater Database and LU3M6TGT Crater Detection Dataset.
+Open `http://localhost:3000` to run the mission navigator.
 
 ---
 
-*Developed for the NASA International Space Apps Challenge 2026.*
+## Data & Open Science Citations
+
+* **NASA JPL Horizons API:** For topocentric Sun & Earth ephemerides (`CENTER='coord@301'`).
+* **NASA LRO LOLA Team (PDS Geosciences):** Digital Elevation Models of the South Pole (SLDEM2015).
+* **NASA Solar System Treks:** Moon Trek South Pole WMTS tile infrastructure.
+* **Kaggle Open Data:** Stuart Robbins Lunar Crater Database & LU3M6TGT Crater Detection Dataset.
+
+*Built by our team for the 2026 NASA International Space Apps Challenge.*
